@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html ng-app='myApp'>
 	<head>
 		<meta charset="utf-8">
 		<title>2 partials 2 controllers 1 factory</title>
@@ -10,30 +10,28 @@
 		myApp.config(function($routeProvider){
 			$routeProvider
 			.when('/', {
-				templateUrl: 'partials/view1.html'
+				templateUrl: 'partials/index.html'
 			})
 			.when('/partial2', {
-				templateUrl: 'partials/view2.html'
+				templateUrl: 'partials/list.html'
 			})
 			.otherwise({
 				redirectTo: '/'
 			})
 		})
 
-		myApp.controller('view1Controller', function($scope){
-			$scope.users = [
-				{first_name: 'Orc', last_name: 'Peon',
-				fav_lang: 'javascript'}
-			]
+		myAppModule.factory('userFactory', function(){
+			var users = [
+			  {first_name: 'Little Niccolo', last_name: 'Machiavelli',
+			  fav_lang: 'javascript'}
+		  	]
+		})
+
+		myApp.controller('ordersController',
 		})
 		</script>
 	</head>
 	<body>
-		<div class="container" ng-controller='ordersController'>
-			first name: <input type="text" ng-model='user.first_name'><br>
-			last name: <input type="text" ng-model="user.last_name"><br>
-			fav language: <input type="text" ng-model="user.fav_lang"><br>
-			<input type="submit" ng-click='newUser()'>
-		</div>
+		<a href="#/"></a>
 	</body>
 </html>

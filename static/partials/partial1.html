@@ -1,0 +1,33 @@
+<div class="container" ng-controller='ordersController'>
+	<div class="organizer">
+		<p>first name: </p><input type="text" ng-model='user.first_name'><br>
+		<p>last name: </p><input type="text" ng-model="user.last_name"><br>
+		<p>favorite language: </p><input type="text" ng-model="user.fav_lang"><br><br>
+		<input type="submit" ng-click='newUser()'><br><br><br>
+	</div>
+	<table border="1px solid green" >
+		<thead>
+			<tr>
+				<td ng-click="order('first_name')">First Name</td>
+				<td ng-click="order('last_name')">Last Name</td>
+				<td ng-click="order('fav_lang')">Favorite Language</td>
+				<td>Action</td>
+		</tr>
+		</thead>
+		<tbody ng-repeat='user in users | orderBy:predicate:reverse'>
+			<tr>
+				<td> {{ user.first_name }}
+					<span class="sortorder" ng-show="predicate === 'first_name'" ng-class="{reverse:reverse}"></span>
+				</td>
+				<td> {{ user.last_name }}
+<span class="sortorder" ng-show="predicate === 'last_name'" ng-class="{reverse:reverse}"></span>
+				</td>
+			</td>
+			<td> {{ user.fav_lang }}
+<span class="sortorder" ng-show="predicate === 'fav_lang'" ng-class="{reverse:reverse}"></span>
+			</td>
+				<td> <a ng-click='deleteProduct(product)' href="#/#">delete {{}}</a> </td>
+			</tr>
+		</tbody>
+	</table><br><br>
+</div>
