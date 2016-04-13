@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset="utf-8">
+		<title>2 partials 2 controllers 1 factory</title>
+		<script src="./angular.js"></script>
+	   <script src="./angular-route.js"></script>
+		<script type="text/javascript">
+		var myApp = angular.module('myApp', ['ngRoute']);
+		myApp.config(function($routeProvider){
+			$routeProvider
+			.when('/', {
+				templateUrl: 'partials/view1.html'
+			})
+			.when('/partial2', {
+				templateUrl: 'partials/view2.html'
+			})
+			.otherwise({
+				redirectTo: '/'
+			})
+		})
+
+		myApp.controller('view1Controller', function($scope){
+			$scope.users = [
+				{first_name: 'Orc', last_name: 'Peon',
+				fav_lang: 'javascript'}
+			]
+		})
+		</script>
+	</head>
+	<body>
+		<div class="container" ng-controller='ordersController'>
+			first name: <input type="text" ng-model='user.first_name'><br>
+			last name: <input type="text" ng-model="user.last_name"><br>
+			fav language: <input type="text" ng-model="user.fav_lang"><br>
+			<input type="submit" ng-click='newUser()'>
+		</div>
+	</body>
+</html>
