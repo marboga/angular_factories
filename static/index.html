@@ -10,9 +10,9 @@
 		myApp.config(function($routeProvider){
 			$routeProvider
 			.when('/', {
-				templateUrl: 'partials/index.html'
+				templateUrl: 'partials/partial1.html'
 			})
-			.when('/partial2', {
+			.when('/list', {
 				templateUrl: 'partials/list.html'
 			})
 			.otherwise({
@@ -20,18 +20,69 @@
 			})
 		})
 
-		myAppModule.factory('userFactory', function(){
+		myApp.factory('userFactory', function(){
 			var users = [
 			  {first_name: 'Little Niccolo', last_name: 'Machiavelli',
 			  fav_lang: 'javascript'}
 		  	]
+			var factory = {};
+			factory.getUsers = function(callback){
+				callback(users);
+			}
+			factory.newUser = function(user){
+				console.log(user)
+				users.push(user)
+			}
+			factory.deleteUser = function(user){
+				console.log("data here",users.indexOf(user))
+				users.splice(user, 1)
+			}
+			return factory;
 		})
 
-		myApp.controller('ordersController',
+		myApp.controller('usersController', function($scope, userFactory){
+			$scope.users = [];
+			userFactory.getUsers(function(data){
+				$scope.users = data;
+			})
+			$scope.newUser = function(){
+				userFactory.newUser($scope.user)
+					console.log('trying to make new user')
+					console.log($scope.user)
+					$scope.user = {};
+			}
+			$scope.deleteUser = function(user){
+					userFactory.deleteUser($scope.users.indexOf(user));
+					console.log($scope,'trying to delete user', user)
+			}
+			$scope.predicate = 'name';
+			$scope.reverse = 'true';
+			$scope.order = function(predicate) {
+				$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+				$scope.predicate = predicate;
+			};
 		})
+
+
+			myApp.controller('listController', function($scope, userFactory){
+				$scope.users = [];
+				userFactory.getUsers(function(data){
+					$scope.users = data;
+				})
+				$scope.predicate = 'name';
+				$scope.reverse = 'true';
+				$scope.order = function(predicate) {
+					$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+					$scope.predicate = predicate;
+				};
+			})
+
 		</script>
 	</head>
 	<body>
-		<a href="#/"></a>
+		<div ng="myApp">
+			<a href="#/">Users</a> | <a href="#/list">List</a>
+        <div ng-view="">
+		</div>
 	</body>
 </html>
